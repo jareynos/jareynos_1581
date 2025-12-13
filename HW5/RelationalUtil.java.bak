@@ -1,0 +1,45 @@
+public class RelationalUtil
+{
+	public static boolean isIncreasing(int a, int b, int c)
+	{	// 2 4 6: true
+		return a < b && b < c;
+	}
+/*
+	public static boolean isDecreasing(int a, int b, int c)
+	{
+		// 6 4 2: true
+		
+	}
+*/
+	public static boolean isBetween(int a, int b, int c)
+	{
+		// 3 5 10: true
+		
+		// 10 5 3: true
+		return (a <= b && b <= c) || (a >= b && b >= c);
+	}
+/*
+	public static boolean isPositive(int a)
+	{
+		// 1: true
+		//-5: false
+	}
+
+	public static boolean isNegative(int a)
+	{
+		//-5: true
+		//1: false
+	}
+*/
+	public static boolean overlaps(int min1, int max1, int min2, int max2)
+	{
+		return min1 <= max2 && min2 <= max1;
+	}
+
+
+
+
+	
+
+
+}

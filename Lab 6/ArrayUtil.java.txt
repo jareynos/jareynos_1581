@@ -1,0 +1,86 @@
+public class ArrayUtil
+{
+	//Problem 1
+	public static void reverse(String[] array)
+	{
+		
+	}
+
+	//Problem 2
+	public static String[] resize(String[] array)
+	{
+		
+	}
+
+	//Problem 3
+	public static String[] add(String element, String[] array)
+	{
+		
+	}
+
+	//Problem 4
+	public static boolean contains(String element, String[] array)
+	{
+		
+		
+	}
+
+	//Problem 5
+	public static int findMinValue(int[] array)
+	{
+		int min = array[0];
+		for (int value : array)
+		{
+			if (value < min)
+			{
+				min = value;
+			}
+		}
+		return min;
+	}
+
+	public static int findMaxValue(int[] array)
+	{
+		
+	}
+
+	//Problem 6
+	public static int getCount(int element, int[] array)
+	{
+		int count = 0;
+		for (int value : array)
+		{
+			if (value == element)
+			{
+				count++;
+			}
+		}
+		return count;
+	}
+// array:1,2,3,3,2,1
+// indices: 0, 5
+//min: 1
+//count: 2
+
+	public static int[] findMinIndex(int[] array)
+	{
+		int min = findMinValue(array);
+		int count = getCount(min, array);
+		int[] indices = new int[count];
+
+		count = 0;
+		for (int i=0; i<array.length; i++ )
+		{
+			if (array[i] == min)
+			{
+				indices[count++] = i;
+			}
+		}
+		return indices;
+	}
+
+	public static int[] findMaxIndex(int[] array)
+	{
+		
+	}
+}

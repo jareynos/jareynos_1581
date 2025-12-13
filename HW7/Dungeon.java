@@ -1,0 +1,75 @@
+import java.util.Scanner;
+public class Dungeon{
+//Declaring and initalizing the class variables
+private static int currentRoom = 0;
+private static int north = 0;
+private static int south = 1;
+private static int east = 2;
+private static int west = 3;
+public static void main(String[] args){
+//Building an array for the room descriptions
+String[] spaceShipRooms = new String [5];
+//Describing each room in the array index
+spaceShipRooms [0] = "You are in the cock pit, exits are to the
+south, east and west.";
+spaceShipRooms [1] = "You are in the main hall, exit are to the
+north, south, east and west.";
+spaceShipRooms [2] = "You are in the research lab, exits are to the
+north, south and east.";
+spaceShipRooms [3] = "You are in the mess hall, exits are to the
+north, south and west.";
+spaceShipRooms [4] = "You are in the fuel room, exits are in the
+north, east and west.";
+//Building the room exits array
+int[][] exits = {{-1,1,2,3},{0,4,2,3},{0,4,1,-1},{0,4,-1,1},{1,-
+1,2,3}};
+System.out.println("You are on space craft Rouge One.");
+//A counter loop for the game to run while moving through the rooms
+for (int i = 5; i > 0; i++){
+//Building a scanner
+Scanner input = new Scanner(System.in);
+//setting a reader for the coordinate charcter entry
+char playerChoice = input.nextLine().charAt(0);
+System.out.println(spaceShipRooms[currentRoom]);
+System.out.printf("%s%n%s%n%s%n%s%n%s%n%s%n", "Which room
+would you like to enter, type a coordinate.", "n: Move to the north", "s: Move
+to the south", "e: Move to the east", "w: Move to the west", "q: To quit the
+game");
+//selection statement for user choice to move into the different rooms
+if (playerChoice == 'n' || playerChoice == 'N'){
+if (exits [currentRoom][north] < 0){
+System.out.println("There is no exit that way.");
+}
+else
+currentRoom = exits[currentRoom][north];
+}
+else if (playerChoice == 's' || playerChoice == 'S'){
+if (exits [currentRoom][south] < 0){
+System.out.println("There is no exit that way.");
+}
+else
+currentRoom = exits[currentRoom][south];
+}
+else if (playerChoice == 'e' || playerChoice == 'E'){
+if (exits [currentRoom][east] < 0){
+System.out.println("There is no exit that way.");
+}
+else
+currentRoom = exits[currentRoom][east];}
+else if (playerChoice == 'w' || playerChoice == 'W'){
+if (exits [currentRoom] [west] < 0){
+System.out.println("There is no exit that way");
+}
+else
+currentRoom = exits[currentRoom][west];
+}
+else if (playerChoice == 'q' || playerChoice == 'Q'){
+System.out.println("You've exited the space ship");
+break;
+}
+else{
+System.out.println("Invalid entry, try again");
+}
+}//end of for loop
+}//end of main method
+}//end of class
