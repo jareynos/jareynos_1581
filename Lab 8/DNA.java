@@ -1,0 +1,149 @@
+import java.util.*;
+import java.io.*;
+public class DNA {
+ public static int massperc = 30; // Percentage of mass required from C-G for protein to become valid
+ public static int codonmin = 5; // Minimum amount of codons a valid protein must have; can be changed
+ public static int nucpercodon = 3; // Number of nucleotides required for each codon; can be changed
+ public static int uniquenuc = 4; // Number of unique nucleotides
+ public static double A = 135.128; // Mass of adenine
+ public static double C = 111.103; // Mass of cytosine
+ public static double G = 151.128; // Mass of guanine
+ public static double T = 125.107; // Mass of thymine
+ public static double J = 100.00; // Junk value
+
+ public static void main(String[] args) throws FileNotFoundException {
+ Scanner console = new Scanner(System.in);
+ System.out.println("This program reports information about DNA\nucleotide sequences that may encode proteins.");
+ System.out.print("Input file name? ");
+ String input = console.next();
+ File f = new File(input);
+
+ Scanner fconsole = new Scanner(f);
+ while (fconsole.hasNext()) {
+ String name = fconsole.nextLine(); // Extracts the region name
+ String nucleotides = fconsole.nextLine(); // Extracts the nucleotides
+ printValues(name, nucleotides); // Start of methods
+ }
+ }
+ // Prints the overall values of each of the genome's properties
+ public static void printValues(String name, String nucleotides) { // Parameters passed from file scan in main
+ System.out.println("Region Name: " + name); // Prints region name
+ System.out.println("Nucleotides: " + nucleotides); // Prints nucleotide structure
+ System.out.println("Nuc. Counts: " +
+Arrays.toString(nucleotideCount(nucleotides))); // Prints the amount of each nucleotide
+ System.out.println("Total Mass%: " +
+Arrays.toString(massCalc(nucleotides))
+ + " of " + totalMass(nucleotides)); // Prints the individual and total masses of the nucleotide
+ System.out.println("Codons List: " +
+Arrays.toString(codonReport(nucleotides))); // Lists the codons present
+ System.out.println("Is protein?: " + yesOrNo(nucleotides)); // States whether or not nucleotide meets the requirement to become a protein
+
+ System.out.println();
+ }
+ // Counts the amount of nucleotides present
+ public static int[] nucleotideCount(String name) {
+int[] count = new int[uniquenuc];
+
+ for (int i = 0; i < name.length(); i++) {
+ if (name.charAt(i) == 'A' || name.charAt(i) == 'a') {
+ count[0]++;
+ }
+ if (name.charAt(i) == 'C' || name.charAt(i) == 'c') {
+ count[1]++;
+ }
+ if (name.charAt(i) == 'G' || name.charAt(i) == 'g') {
+ count[2]++;
+ }
+ if (name.charAt(i) == 'T' || name.charAt(i) == 't') {
+ count[3]++;
+ }
+ }
+ return count; // Returns to printValues
+ }
+ // Calculates the individual masses of each nucleotide
+ public static double[] massCalc (String nuc) { // nucleotide string
+ double[] mass = new double[uniquenuc];
+ double total = totalMass(nuc);
+ for(int i = 0; i < nuc.length(); i++){
+ if( nuc.charAt(i) == 'A' || nuc.charAt(i) == 'a'){
+ mass[0] += A;
+ }
+ if( nuc.charAt(i) == 'C' || nuc.charAt(i) == 'c'){
+ mass[1] += C;
+ }
+ if( nuc.charAt(i) == 'G' || nuc.charAt(i) == 'g'){
+ mass[2] += G;
+ }
+ if( nuc.charAt(i) == 'T'|| nuc.charAt(i) == 't'){
+ mass[3] += T;
+ }
+ }
+ for(int i = 0; i < 4; i++){
+ mass[i] = Math.round((mass[i] / total) * 1000) / 10.0;
+ }
+ return mass; // Returns to printValues
+ }
+
+ // Calculates the total mass of a nucleotide
+ public static double totalMass(String nuc) { // nucleotide string
+ double val = 0.0;
+ for (int i = 0; i < nuc.length(); i++) {
+ if(nuc.charAt(i) == 'A' || nuc.charAt(i) == 'a'){
+ val += A ;
+ }
+ if(nuc.charAt(i) == 'C' || nuc.charAt(i) == 'c'){
+ val += C;
+ }
+ if(nuc.charAt(i) == 'G' || nuc.charAt(i) == 'g'){
+ val += G;
+ }
+ if(nuc.charAt(i) == 'T'|| nuc.charAt(i) == 't'){
+ val += T;
+ }
+ if(nuc.charAt(i) == '-'){
+ val += J;
+ }
+ }
+ return (Math.round(val * 10)) / 10.0; // Returns to both massCalc and printValues
+ }
+ // Determines the codons present, and returns them as an array
+ public static String[] codonReport(String nuc) { // nucleotide string
+ int num = 0;
+ for(int i = 0; i < nuc.length(); i++){
+ if(nuc.charAt(i) != '-'){
+ num++;
+ }
+ }
+ num = num / nucpercodon;
+ String[] list= new String[num];
+ for (int i = 0; i < num ; i++){
+ list[i] = "";
+ }
+ int time = 0;
+ for(int i = 0; i < nuc.length(); i++){
+ if(nuc.charAt(i) != '-'){
+ list[time / nucpercodon] += nuc.charAt(i);
+ time++;
+ }
+ }
+ return list; // returns to printValues
+ }
+ // Determines if nucleotide is protein or not
+ public static String yesOrNo(String nuc) {
+ for (int i = 0; i < uniquenuc; i++) {
+ if (nucleotideCount(nuc)[i] == 0){
+ return "NO";
+ }
+ }
+ if (massCalc(nuc)[1] + massCalc(nuc)[2] < massperc)
+ {
+ return "NO";
+ }
+ String codon = Arrays.toString(codonReport(nuc));
+ if (codon.length() / 5 < codonmin)
+ {
+ return "NO";
+ }
+ return "YES";
+ } // All returns to printValues
+}

@@ -1,0 +1,42 @@
+public class RGBColor{
+    private int red;
+    private int blue;
+    private int green;
+
+    public RGBColor(int red, int green, int blue){
+        this.red = red;
+        
+    }
+	
+	public int getRed()
+	{
+		return this.red;
+	}
+
+	public int getGreen()
+	{
+		return this.green;
+	}
+
+	public int getBlue()
+	{
+		return this.blue;
+	}
+
+    public boolean equals(RGBColor other){
+        boolean isSame = false;
+		
+		if(isSame = true){
+        }
+
+        return isSame;
+    }
+
+    public String toString(){
+        return String.format("rgb(%d,%d,%d)", this.red, this.green, this.blue);
+    }
+
+    public String toHex(){
+        return String.format("#%02x%02x%02x", this.red, this.green, this.blue);
+    }
+}
